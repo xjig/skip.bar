@@ -1,0 +1,120 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    max-width: 600px;
+    text-align: left;
+}
+
+        .overlay-gif {
+            position: absolute;
+            top: -55px;
+            right: 5px;
+            width: 75px;
+            height: auto;
+            pointer-events: none;
+        }
+
+.header h1 {
+    font-size: 3em;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.header .dot {
+    color: #22C55E;
+
+}
+
+
+.subtext {
+    color: #888;
+    font-style: italic;
+    margin-top: 5px;
+}
+
+nav {
+    margin: 20px 0;
+}
+
+
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 1.1em;
+    position: relative;
+    transition: color 0.3s;
+}
+
+nav a:hover,
+nav a:first-child {
+    text-decoration: underline;
+    color: #1db954;
+}
+
+.dropdown {
+    font-size: 1.1em;
+    color: #fff;
+    cursor: pointer;
+}
+
+.content {
+    margin: 20px 0;
+    color: #aaa;
+}
+
+.icons {
+    margin: 20px 0;
+}
+
+.icons a {
+    color: #BFBFBF;
+    font-size: 1.5em;
+    margin: 0 10px;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.icons a:hover {
+    transform: scale(1.2);
+    color: #ffffff;
+}
+
+.spotify-status {
+    display: flex;
+    align-items: center;
+    border: #333333 1px solid;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.spotify-status:hover {
+    background-color: #050505;
+}
+
+.spotify-status i {
+    font-size: 1.5em;
+    margin-right: 10px;
+    color: #1db954;
+}
+
+.spotify-status p {
+    margin: 0;
+    color: #bbb;
+}

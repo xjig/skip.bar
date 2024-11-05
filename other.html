@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>skip</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 700px;
+            padding: 15px;
+            text-align: left;
+        }
+
+        nav {
+            margin: 20px 0;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 1.1em;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        nav a:hover,
+        nav a:nth-child(4) {
+            color: #1db954;
+            text-decoration: underline;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .dot {
+            color: #22C55E;
+        }
+
+        .subtext {
+            color: #888;
+            font-style: italic;
+            margin-top: 4px;
+            font-size: 0.9em;
+        }
+
+        .projects {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .project-card {
+            display: flex;
+            border: #333333 1px solid;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 4px;
+            margin-right: 12px;
+            object-fit: cover;
+        }
+
+        .project-info h2 {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .status-dot {
+            color: #22C55E;
+            font-size: 0.9em;
+            vertical-align: middle;
+        }
+
+        .project-description {
+            color: #aaa;
+            margin-bottom: 6px;
+            font-size: 0.9em;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .tag {
+            background-color: #111111;
+            color: #676767;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            white-space: nowrap;
+        }
+
+        .icons {
+            margin-top: 15px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .icons a {
+            color: #BFBFBF;
+            font-size: 1.3em;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .icons a:hover {
+            transform: scale(1.1);
+            color: #ffffff;
+        }
+
+        .gifs, .radio-section {
+            margin-top: 30px;
+        }
+
+        .gif-gallery {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .gif {
+            width: auto;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .testimonials {
+            margin-top: 30px;
+        }
+
+        .testimonials h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .testimonial-card {
+            display: flex;
+            align-items: center;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            gap: 15px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .testimonial-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .author {
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .testimonial-content p {
+            color: #aaa;
+            font-size: 0.9em;
+            margin-top: 0;
+        }
+        
+        .carousel {
+            position: relative;
+            display: flex;
+            overflow: hidden;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-item {
+            min-width: 50%;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .carousel-buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .carousel-button {
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: #fff;
+            font-size: 1.5em;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>skippin <span class="dot" id="status-dot">•</span></h1>
+            <p id="subtext" class="subtext">Offline...</p>
+        </div>
+        <nav>
+            <a href="..">home</a>
+            <a href="../redme">readme</a>
+            <a href="../projects">projects</a>
+            <a href="">other</a>
+
+        </nav>
+        <div class="gifs">
+            <h2>Random Pictures</h2>
+            <div class="carousel">
+                <div class="carousel-track">
+                    <div class="carousel-item">
+                        <img src="https://media1.tenor.com/m/63oQ19PQB1YAAAAd/erm-what-the-sigma-sigma.gif" alt="img 1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://files.catbox.moe/rbj23k.gif" alt="imgGIF 2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://files.catbox.moe/j8rxqe.jpg" alt="img 3">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://media.discordapp.net/attachments/495997785162907651/1251655325564670072/caption-1-1.gif?ex=6728991c&is=6727479c&hm=4442fa912cfdea26ec11c1563ef31b71293277ddb0ef58e1aa4151a4fedd26a0&=&width=493&height=651" alt="img 4">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://media.discordapp.net/attachments/1277616424130445344/1302026693833396355/watermark.gif?ex=6728989a&is=6727471a&hm=536a8cd1c3e1a0ac5de675c19ae49d2dd034de7f85fa61aef670953de3939268&=" alt="img 4">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://files.catbox.moe/e9d5bx.gif" alt="img 4">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://media1.tenor.com/m/4xPWuHFNtCMAAAAd/brandon-brandon-curington.gif" alt="img 4">
+                    </div>
+                </div>
+                <div class="carousel-buttons">
+                    <button class="carousel-button" id="carousel-prev">&#10094;</button>
+                    <button class="carousel-button" id="carousel-next">&#10095;</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonials">
+            <h2>Friends</h2>
+
+            <div class="testimonial-card" data-user-id="1048171869339136010">
+                <img src="" alt="User Profile" class="profile-pic">
+                <div class="testimonial-content">
+                    <span class="author">Loading...</span>
+                    <p>"skippin is super awesome and very hot"</p>
+                </div>
+            </div>
+            <div class="testimonial-card" data-user-id="637714762305634311">
+                <img src="" alt="User Profile" class="profile-pic">
+                <div class="testimonial-content">
+                    <span class="author">Loading...</span>
+                    <p>"He's a retard dont trust a word this man says"</p>
+                </div>
+            </div>
+            <div class="testimonial-card" data-user-id="1139941351761379471">
+                <img src="" alt="User Profile" class="profile-pic">
+                <div class="testimonial-content">
+                    <span class="author">Loading...</span>
+                    <p>"amazing at what he does :pray: ."</p>
+                </div>
+            </div>
+            <div class="testimonial-card" data-user-id="1267730107565477909">
+                <img src="" alt="User Profile" class="profile-pic">
+                <div class="testimonial-content">
+                    <span class="author">Loading...</span>
+                    <p>"Skip is an real friend that cares about you, always making me laugh and gives great advice"</p>
+                </div>
+            </div>
+            <div class="testimonial-card" data-user-id="265571964167520257">
+                <img src="" alt="User Profile" class="profile-pic">
+                <div class="testimonial-content">
+                    <span class="author">Loading...</span>
+                    <p>"skippie-poo is the cutest dev I've ever seen :cat_kiss:"</p>
+                </div>
+            </div>
+            <div class="testimonial-card" data-user-id="1126147122308325376">
+                <img src="" alt="User Profile" class="profile-pic">
+                <div class="testimonial-content">
+                    <span class="author">Loading...</span>
+                    <p>"skip is my favourite full stack developer, he has so many lamborghini and hot women number 1 hvh"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const userId = "1177497949601812512";
+        const subtextElement = document.getElementById("subtext");
+        const statusDot = document.getElementById("status-dot");
+
+        async function fetchUserData(userId, cardElement) {
+            try {
+                const response = await fetch(`https://api.lanyard.rest/v1/users/${userId}`);
+                const data = await response.json();
+
+                if (data.success && data.data) {
+                    const username = `${data.data.discord_user.username}`;
+                    const avatarId = data.data.discord_user.avatar;
+                    const avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${avatarId}.png?size=64`;
+
+                    cardElement.querySelector('.profile-pic').src = avatarUrl;
+                    cardElement.querySelector('.author').textContent = username;
+                } else {
+                    cardElement.querySelector('.author').textContent = "User not found";
+                }
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+                cardElement.querySelector('.author').textContent = "Error loading user";
+            }
+        }
+
+        document.querySelectorAll('.testimonial-card').forEach(card => {
+            const userId = card.getAttribute('data-user-id');
+            fetchUserData(userId, card);
+        });
+
+        async function fetchPresence() {
+            try {
+                const response = await fetch(`https://api.lanyard.rest/v1/users/${userId}`);
+                const data = await response.json();
+
+                if (data.success && data.data) {
+                    const presence = data.data;
+
+                    const discordStatus = presence.discord_status;
+                    switch (discordStatus) {
+                        case "online":
+                            statusDot.style.color = "#22C55E";
+                            break;
+                        case "idle":
+                            statusDot.style.color = "#FACC15";
+                            break;
+                        case "dnd":
+                            statusDot.style.color = "#EF4444";
+                            break;
+                        default:
+                            statusDot.style.color = "#6B7280";
+                    }
+
+                    const customStatus = presence.activities.find(activity => activity.type === 4);
+                    if (customStatus && customStatus.state) {
+                        let statusText = customStatus.state;
+
+                        if (customStatus.emoji) {
+                            if (customStatus.emoji.id) {
+                                const emojiExtension = customStatus.emoji.animated ? 'gif' : 'png';
+                                const emojiURL = `https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.${emojiExtension}`;
+                                statusText = `<img src="${emojiURL}" alt="${customStatus.emoji.name}" style="width: 20px; vertical-align: middle; margin-right: 5px;">` + statusText;
+                            } else if (customStatus.emoji.name) {
+                                statusText = `${customStatus.emoji.name} ${statusText}`;
+                            }
+                        }
+                        subtextElement.innerHTML = statusText;
+                    }
+                } else {
+                    subtextElement.textContent = "Unable to fetch status";
+                }
+            } catch (error) {
+                subtextElement.textContent = "Error fetching status";
+                console.error("Error fetching presence data:", error);
+            }
+        }
+
+        fetchPresence();
+        setInterval(fetchPresence, 1000);
+
+        const track = document.querySelector('.carousel-track');
+        const prevButton = document.getElementById('carousel-prev');
+        const nextButton = document.getElementById('carousel-next');
+        let currentIndex = 0;
+
+        function updateCarousel() {
+            const itemWidth = track.children[0].getBoundingClientRect().width;
+            track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+        }
+
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex === 0) ? track.children.length - 2 : currentIndex - 1;
+            updateCarousel();
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex === track.children.length - 2) ? 0 : currentIndex + 1;
+            updateCarousel();
+        });
+
+        window.addEventListener('resize', updateCarousel);
+
+    </script>
+</body>
+</html>

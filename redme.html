@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>skip</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<style>
+nav a:nth-child(1) {
+    text-decoration: none!important;
+    color: #ffffff;
+}
+
+nav a:nth-child(2) {
+    text-decoration: underline;
+    color: #1db954;
+}
+
+        .spotify-status {
+            position: relative;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .overlay-gif {
+            position: absolute;
+            top: -55px;
+            right: 5px;
+            width: 75px;
+            height: auto;
+            pointer-events: none;
+        }
+</style>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>skippin <span class="dot" id="status-dot">•</span></h1>
+            <p id="subtext" class="subtext">Offline...</p>
+        </div>
+        <nav>
+            <a href="..">home</a>
+            <a href="">readme</a>
+            <a href="../projects">projects</a>
+            <a href="../other">other</a>
+
+        </nav>
+        <div class="content" style="margin-top: 30px; line-height: 1.6;">
+            <p style="font-size: 1.1rem; font-weight: 400; margin: 0;">I’m a versatile 16-year-old developer from Russia, now in Poland, specializing in backend development with a broad skill set across various tech areas.</p>
+            <p style="font-size: 1rem; color: #555;">The time in Russia is <span id="russia-time" style="font-weight: 600;">--:--</span>.</p>
+        </div>
+        <div class="icons">
+            <a href="https://github.com/xjig"><i class="fab fa-github"></i></a>
+            <a href="https://discord.com/users/1177497949601812512"><i class="fab fa-discord"></i></a>
+            <a href="mailto:xjig@inject.bio"><i class="fas fa-envelope"></i></a>
+        </div>
+        <div class="spotify-status" id="spotify-status">
+            <img src="https://files.catbox.moe/m7vc0e.gif" class="overlay-gif" alt="Overlay GIF">
+            <i class="fab fa-spotify"></i>
+            <p>currently not listening...</p>
+        </div>
+    </div>
+
+    <script>
+        const userId = "1177497949601812512";
+        const subtextElement = document.getElementById("subtext");
+        const russiaTimeElement = document.getElementById("russia-time");
+        const spotifyStatusElement = document.getElementById("spotify-status");
+        const statusDot = document.getElementById("status-dot");
+
+        async function fetchPresence() {
+            try {
+                const response = await fetch(`https://api.lanyard.rest/v1/users/${userId}`);
+                const data = await response.json();
+
+                if (data.success && data.data) {
+                    const presence = data.data;
+
+                    const discordStatus = presence.discord_status;
+                    switch (discordStatus) {
+                        case "online":
+                            statusDot.style.color = "#22C55E";
+                            break;
+                        case "idle":
+                            statusDot.style.color = "#FACC15";
+                            break;
+                        case "dnd":
+                            statusDot.style.color = "#EF4444";
+                            break;
+                        default:
+                            statusDot.style.color = "#6B7280";
+                    }
+
+                    const customStatus = presence.activities.find(activity => activity.type === 4);
+                    if (customStatus && customStatus.state) {
+                        let statusText = customStatus.state;
+
+                        if (customStatus.emoji) {
+                            if (customStatus.emoji.id) {
+                                const emojiExtension = customStatus.emoji.animated ? 'gif' : 'png';
+                                const emojiURL = `https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.${emojiExtension}`;
+                                statusText = `<img src="${emojiURL}" alt="${customStatus.emoji.name}" style="width: 20px; vertical-align: middle; margin-right: 5px;">` + statusText;
+                            } else if (customStatus.emoji.name) {
+                                statusText = `${customStatus.emoji.name} ${statusText}`;
+                            }
+                        }
+                        subtextElement.innerHTML = statusText;
+                    }
+
+                    if (presence.listening_to_spotify && presence.spotify) {
+                        const spotify = presence.spotify;
+                        const songInfo = `
+                            <div style="display: flex; align-items: center;">
+                                <img src="${spotify.album_art_url}" alt="Album art" style="width: 50px; height: 50px; margin-right: 10px;">
+                                <div>
+                                    <p>Listening to <strong>${spotify.song}</strong></p>
+                                    <p>by <em>${spotify.artist}</em></p>
+                                </div>
+                            </div>
+                        `;
+                        spotifyStatusElement.innerHTML = songInfo + '<img src="https://files.catbox.moe/m7vc0e.gif" class="overlay-gif" alt="Overlay GIF">';
+                    } else {
+                        spotifyStatusElement.innerHTML = '<img src="https://files.catbox.moe/m7vc0e.gif" class="overlay-gif" alt="Overlay GIF"><i class="fab fa-spotify"></i> <p>currently not listening...</p>';
+                    }
+                } else {
+                    subtextElement.textContent = "Unable to fetch status";
+                    spotifyStatusElement.innerHTML = '<img src="https://files.catbox.moe/m7vc0e.gif" class="overlay-gif" alt="Overlay GIF"><i class="fab fa-spotify"></i> <p>currently not listening...</p>';
+                }
+            } catch (error) {
+                subtextElement.textContent = "Error fetching status";
+                spotifyStatusElement.innerHTML = '<img src="https://files.catbox.moe/m7vc0e.gif" class="overlay-gif" alt="Overlay GIF"><i class="fab fa-spotify"></i> <p>currently not listening...</p>';
+                console.error("Error fetching presence data:", error);
+            }
+        }
+
+        function updateRussiaTime() {
+            const now = new Date();
+            const options = { timeZone: "Europe/Moscow", hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+            const russiaTime = now.toLocaleTimeString('en-GB', options);
+            russiaTimeElement.textContent = russiaTime;
+        }
+
+        fetchPresence();
+        setInterval(fetchPresence, 1000);
+        updateRussiaTime();
+        setInterval(updateRussiaTime, 1000);
+    </script>
+</body>
+</html>
